@@ -1,5 +1,5 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %> <%@ taglib prefix="c"
-uri="http://java.sun.com/jsp/jstl/core" %>
+uri="http://java.sun.com/jsp/jstl/core" %> <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -36,9 +36,9 @@ uri="http://java.sun.com/jsp/jstl/core" %>
                                     <td>${user.email}</td>
                                     <td>${user.fullName}</td>
                                     <td>
-                                        <a href="#!" class="btn btn-success">View</a>
-                                        <a href="#!" class="btn btn-warning mx-2">Update</a>
-                                        <a href="#!" class="btn btn-danger">Delete</a>
+                                        <a href="/admin/user/${user.id}" class="btn btn-success">View</a>
+                                        <a href="/admin/user/update/${user.id}" class="btn btn-warning mx-2">Update</a>
+                                        <a href="/admin/user/delete/${user.id}" class="btn btn-danger">Delete</a>
                                     </td>
                                 </tr>
                             </c:forEach>

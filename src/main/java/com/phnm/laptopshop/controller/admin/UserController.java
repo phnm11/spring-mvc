@@ -1,29 +1,24 @@
 package com.phnm.laptopshop.controller.admin;
 
-import java.io.BufferedOutputStream;
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.util.List;
-
-import jakarta.servlet.ServletContext;
+import com.phnm.laptopshop.domain.User;
+import com.phnm.laptopshop.service.UploadService;
+import com.phnm.laptopshop.service.UserService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-
-import com.phnm.laptopshop.domain.User;
-import com.phnm.laptopshop.service.UserService;
 import org.springframework.web.multipart.MultipartFile;
+
+import java.util.List;
 
 @Controller
 public class UserController {
     private final UserService userService;
+    private final UploadService uploadService;
 
-    private final ServletContext servletContext;
 
-    public UserController(UserService userService, ServletContext servletContext) {
+    public UserController(UserService userService, UploadService uploadService) {
         this.userService = userService;
-        this.servletContext = servletContext;
+        this.uploadService = uploadService;
     }
 
     @RequestMapping("/")
@@ -61,29 +56,8 @@ public class UserController {
             @ModelAttribute("newUser") User newUser,
             @RequestParam("userAvatar") MultipartFile file
     ) {
-        try {
-            byte[] bytes = file.getBytes();
 
-            String rootPath = servletContext.getRealPath("/resources/images");
-
-            File dir = new File(rootPath + File.separator + "avatar");
-
-            if (!dir.exists())
-                dir.mkdirs();
-
-            File serverFile = new File(dir.getAbsolutePath() + File.separator
-                    + System.currentTimeMillis() + "-" + file.getOriginalFilename());
-
-            BufferedOutputStream stream = new BufferedOutputStream(
-                    new FileOutputStream(serverFile)
-            );
-
-            stream.write(bytes);
-            stream.close();
-
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
+        String fileName = uploadService.handleSaveUploadFile(file, "avatar");
 //        userService.saveUser(newUser);
         return "redirect:/admin/user";
     }

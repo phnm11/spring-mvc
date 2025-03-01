@@ -1,19 +1,23 @@
 package com.phnm.laptopshop.service;
 
-import java.util.List;
-
+import com.phnm.laptopshop.domain.Role;
+import com.phnm.laptopshop.domain.User;
+import com.phnm.laptopshop.repository.RoleRepository;
+import com.phnm.laptopshop.repository.UserRepository;
 import org.springframework.stereotype.Service;
 
-import com.phnm.laptopshop.domain.User;
-import com.phnm.laptopshop.repository.UserRepository;
+import java.util.List;
 
 @Service
 public class UserService {
 
     private final UserRepository userRepository;
+    private final RoleRepository roleRepository;
 
-    public UserService(UserRepository userRepository) {
+    public UserService(UserRepository userRepository,
+                       RoleRepository roleRepository) {
         this.userRepository = userRepository;
+        this.roleRepository = roleRepository;
     }
 
     public List<User> getAllUsers() {
@@ -36,5 +40,9 @@ public class UserService {
 
     public void deleteUserById(long id) {
         userRepository.deleteById(id);
+    }
+
+    public Role getRoleByName(String name) {
+        return roleRepository.findByName(name);
     }
 }

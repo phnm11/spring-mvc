@@ -3,6 +3,7 @@ package com.phnm.laptopshop.controller.admin;
 import com.phnm.laptopshop.domain.User;
 import com.phnm.laptopshop.service.UploadService;
 import com.phnm.laptopshop.service.UserService;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -14,14 +15,19 @@ import java.util.List;
 public class UserController {
     private final UserService userService;
     private final UploadService uploadService;
+    private final PasswordEncoder passwordEncoder;
 
 
-    public UserController(UserService userService, UploadService uploadService) {
+    public UserController(
+            UserService userService,
+            UploadService uploadService,
+            PasswordEncoder passwordEncoder) {
         this.userService = userService;
         this.uploadService = uploadService;
+        this.passwordEncoder = passwordEncoder;
     }
 
-    @RequestMapping("/")
+    @GetMapping("/")
     public String getHomePage(Model model) {
         List<User> arrUsers = userService.getAllUsersByEmail("example@gmail.com");
         System.out.println(arrUsers);
@@ -30,14 +36,14 @@ public class UserController {
         return "hello";
     }
 
-    @RequestMapping("/admin/user")
+    @GetMapping("/admin/user")
     public String getUserPage(Model model) {
         List<User> users = userService.getAllUsers();
         model.addAttribute("users", users);
         return "admin/user/index";
     }
 
-    @RequestMapping("/admin/user/{id}")
+    @GetMapping("/admin/user/{id}")
     public String getDetailUserPage(Model model, @PathVariable long id) {
         User user = userService.getUserById(id);
         model.addAttribute("id", id);
@@ -58,11 +64,19 @@ public class UserController {
     ) {
 
         String fileName = uploadService.handleSaveUploadFile(file, "avatar");
-//        userService.saveUser(newUser);
+        String hashPassword = passwordEncoder.encode(newUser.getPassword());
+
+        if (!file.isEmpty()) {
+            newUser.setAvatar(fileName);
+        }
+        newUser.setPassword(hashPassword);
+        newUser.setRole(userService.getRoleByName(newUser.getRole().getName()));
+
+        userService.saveUser(newUser);
         return "redirect:/admin/user";
     }
 
-    @RequestMapping("/admin/user/update/{id}")
+    @GetMapping("/admin/user/update/{id}")
     public String getUpdateUserPage(Model model, @PathVariable long id) {
         User currentUser = userService.getUserById(id);
         model.addAttribute("newUser", currentUser);
@@ -70,12 +84,21 @@ public class UserController {
     }
 
     @PostMapping("/admin/user/update")
-    public String updateUser(@ModelAttribute("newUser") User user) {
+    public String updateUser(
+            @ModelAttribute("newUser") User user,
+            @RequestParam("userAvatar") MultipartFile file) {
         User currentUser = userService.getUserById(user.getId());
         if (currentUser != null) {
             currentUser.setPhone(user.getPhone());
             currentUser.setFullName(user.getFullName());
             currentUser.setAddress(user.getAddress());
+            currentUser.setRole(userService.getRoleByName(user.getRole().getName()));
+
+            String fileName = uploadService.handleSaveUploadFile(file, "avatar");
+
+            if (!file.isEmpty()) {
+                currentUser.setAvatar(fileName);
+            }
 
             userService.saveUser(currentUser);
         }

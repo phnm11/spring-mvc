@@ -28,15 +28,19 @@ public class UploadService {
             if (!dir.exists()) {
                 dir.mkdirs();
             }
-            finalName = System.currentTimeMillis() + "-" + file.getOriginalFilename();
-            File serverFile = new File(dir.getAbsolutePath() + File.separator + finalName);
 
-            BufferedOutputStream stream = new BufferedOutputStream(
-                    new FileOutputStream(serverFile)
-            );
+            if (!file.isEmpty()) {
+                finalName = System.currentTimeMillis() + "-" + file.getOriginalFilename();
+                File serverFile = new File(dir.getAbsolutePath() + File.separator + finalName);
 
-            stream.write(bytes);
-            stream.close();
+                BufferedOutputStream stream = new BufferedOutputStream(
+                        new FileOutputStream(serverFile)
+                );
+
+                stream.write(bytes);
+                stream.close();
+            }
+
 
         } catch (IOException e) {
             throw new RuntimeException(e);

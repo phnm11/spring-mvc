@@ -27,15 +27,6 @@ public class UserController {
         this.passwordEncoder = passwordEncoder;
     }
 
-    @GetMapping("/")
-    public String getHomePage(Model model) {
-        List<User> arrUsers = userService.getAllUsersByEmail("example@gmail.com");
-        System.out.println(arrUsers);
-        model.addAttribute("test", "test");
-        model.addAttribute("check", "Hi from User Controller!");
-        return "hello";
-    }
-
     @GetMapping("/admin/user")
     public String getUserPage(Model model) {
         List<User> users = userService.getAllUsers();

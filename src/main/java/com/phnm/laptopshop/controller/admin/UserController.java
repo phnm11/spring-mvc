@@ -3,9 +3,15 @@ package com.phnm.laptopshop.controller.admin;
 import com.phnm.laptopshop.domain.User;
 import com.phnm.laptopshop.service.UploadService;
 import com.phnm.laptopshop.service.UserService;
+import com.phnm.laptopshop.validation.CreateGroup;
+import com.phnm.laptopshop.validation.UpdateGroup;
+import jakarta.validation.Valid;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.FieldError;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -50,16 +56,23 @@ public class UserController {
 
     @PostMapping(value = "/admin/user/create")
     public String createUser(
-            @ModelAttribute("newUser") User newUser,
+            @ModelAttribute("newUser") @Validated(CreateGroup.class) User newUser,
+            BindingResult newUserBindingResult,
             @RequestParam("userAvatar") MultipartFile file
     ) {
+        List<FieldError> errors = newUserBindingResult.getFieldErrors();
+        for (FieldError error : errors) {
+            System.out.println(">>>" + error.getField() + " - " + error.getDefaultMessage());
+        }
+
+        if (newUserBindingResult.hasErrors()) {
+            return "admin/user/create";
+        }
 
         String fileName = uploadService.handleSaveUploadFile(file, "avatar");
         String hashPassword = passwordEncoder.encode(newUser.getPassword());
 
-        if (!file.isEmpty()) {
-            newUser.setAvatar(fileName);
-        }
+        newUser.setAvatar(fileName);
         newUser.setPassword(hashPassword);
         newUser.setRole(userService.getRoleByName(newUser.getRole().getName()));
 
@@ -76,8 +89,18 @@ public class UserController {
 
     @PostMapping("/admin/user/update")
     public String updateUser(
-            @ModelAttribute("newUser") User user,
+            @ModelAttribute("newUser") @Validated(UpdateGroup.class) User user,
+            BindingResult newUserBindingResult,
             @RequestParam("userAvatar") MultipartFile file) {
+        List<FieldError> errors = newUserBindingResult.getFieldErrors();
+        for (FieldError error : errors) {
+            System.out.println(">>>" + error.getField() + " - " + error.getDefaultMessage());
+        }
+
+        if (newUserBindingResult.hasErrors()) {
+            return "admin/user/update";
+        }
+
         User currentUser = userService.getUserById(user.getId());
         if (currentUser != null) {
             currentUser.setPhone(user.getPhone());

@@ -35,15 +35,19 @@
                 <ol class="breadcrumb mb-4">
                     <li class="breadcrumb-item"><a href="/admin">Dashboard</a></li>
                     <li class="breadcrumb-item"><a href="/admin/product">Products</a></li>
-                    <li class="breadcrumb-item active">Create</li>
+                    <li class="breadcrumb-item active">Update</li>
                 </ol>
                 <div class="my-5">
                     <div class="row">
                         <div class="col-md-6 col-12 mx-auto">
-                            <h3>Create a product</h3>
+                            <h3>Update a product</h3>
                             <hr/>
-                            <form:form method="post" action="/admin/product/create" modelAttribute="newProduct"
+                            <form:form method="post" action="/admin/product/update" modelAttribute="product"
                                        class="row g-3" enctype="multipart/form-data">
+                                <div class="mb-3" style="display: none">
+                                    <label for="id" class="form-label">ID:</label>
+                                    <form:input type="text" class="form-control" path="id"/>
+                                </div>
                                 <div class="col-md-6">
                                     <c:set var="invalidName">
                                         <form:errors path="name" cssClass="invalid-feedback"/>
@@ -122,6 +126,9 @@
                                            accept=".png, .jpg, .jpeg"/>
                                 </div>
                                 <div class="col-12 mb-3">
+                                    <c:if test="${not empty product.image}">
+                                        <img style="max-height: 250px;" alt="Product thumbnail" id="thumbPreview" src="/images/product_thumbnail/${product.image}"/>
+                                    </c:if>
                                     <img style="max-height: 250px; display: none;" alt="Product thumbnail"
                                          id="thumbPreview"/>
                                 </div>

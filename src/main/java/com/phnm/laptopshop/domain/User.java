@@ -2,6 +2,8 @@ package com.phnm.laptopshop.domain;
 
 import java.util.List;
 
+import com.phnm.laptopshop.validation.CreateGroup;
+import com.phnm.laptopshop.validation.UpdateGroup;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -10,6 +12,7 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
+import jakarta.validation.constraints.*;
 
 @Entity
 @Table(name = "users")
@@ -18,14 +21,20 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
+    @Email(message = "Email is not valid", regexp = "^[a-zA-Z0-9_!#$%&'*+/=?`{|}~^.-]+@[a-zA-Z0-9.-]+$", groups = {CreateGroup.class, UpdateGroup.class})
     private String email;
 
+    @NotNull(groups = CreateGroup.class)
+    @Size(min = 3, message = "Password must be at least 3 characters", groups = CreateGroup.class)
     private String password;
 
+    @NotNull
+    @Size(min = 2, message = "Full name must be at least 2 characters", groups = {CreateGroup.class, UpdateGroup.class})
     private String fullName;
 
     private String address;
 
+    @Pattern(regexp = "^\\+?[0-9. ()-]{7,25}$|^$", message = "Phone number is not valid", groups = {CreateGroup.class, UpdateGroup.class})
     private String phone;
 
     private String avatar;

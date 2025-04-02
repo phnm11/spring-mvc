@@ -1,6 +1,9 @@
 package com.phnm.laptopshop.domain;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.DecimalMin;
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotEmpty;
 
 @Entity
 @Table(name = "products")
@@ -9,16 +12,22 @@ public class Product {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
+    @NotEmpty(message = "Product name is required")
     private String name;
 
+    @DecimalMin(value = "0", inclusive = false, message = "Price must be greater than 0")
     private double price;
 
     private String image;
 
+    @NotEmpty(message = "Detail description is required")
+    @Column(columnDefinition = "MEDIUMTEXT")
     private String detailDesc;
 
+    @NotEmpty(message = "Short description is required")
     private String shortDesc;
 
+    @Min(value = 1, message = "Quantity must be greater than 0")
     private long quantity;
 
     private long sold;

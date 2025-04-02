@@ -1,4 +1,4 @@
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page contentType="text/html" pageEncoding="UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <!DOCTYPE html>
@@ -34,7 +34,8 @@
                 <h1 class="mt-4">Manage Users</h1>
                 <ol class="breadcrumb mb-4">
                     <li class="breadcrumb-item"><a href="/admin">Dashboard</a></li>
-                    <li class="breadcrumb-item active">Users</li>
+                    <li class="breadcrumb-item"><a href="/admin/user">Users</a></li>
+                    <li class="breadcrumb-item active">Update</li>
                 </ol>
                 <div class="my-5">
                     <div class="row">
@@ -45,19 +46,37 @@
                                        class="row g-3" enctype="multipart/form-data">
                                 <div class="mb-3" style="display: none">
                                     <label for="id" class="form-label">ID:</label>
-                                    <form:input type="text" class="form-control" path="id" />
+                                    <form:input type="text" class="form-control" path="id"/>
                                 </div>
                                 <div>
+                                    <c:set var="invalidEmail">
+                                        <form:errors path="email" cssClass="invalid-feedback"/>
+                                    </c:set>
                                     <label for="email" class="form-label">Email:</label>
-                                    <form:input type="email" class="form-control" path="email"/>
+                                    <form:input type="email"
+                                                class="form-control ${not empty invalidEmail ? 'is-invalid' : ''}"
+                                                path="email"/>
+                                        ${invalidEmail}
                                 </div>
                                 <div class="col-md-6">
-                                    <label for="phone" class="form-label">Phone number:</label>
-                                    <form:input type="text" class="form-control" path="phone"/>
-                                </div>
-                                <div class="col-md-6">
+                                    <c:set var="invalidFullName">
+                                        <form:errors path="fullName" cssClass="invalid-feedback"/>
+                                    </c:set>
                                     <label for="fullName" class="form-label">Full name:</label>
-                                    <form:input type="text" class="form-control" path="fullName"/>
+                                    <form:input type="text"
+                                                class="form-control ${not empty invalidFullName ? 'is-invalid' : ''}"
+                                                path="fullName"/>
+                                        ${invalidFullName}
+                                </div>
+                                <div class="col-md-6">
+                                    <c:set var="invalidPhone">
+                                        <form:errors path="phone" cssClass="invalid-feedback"/>
+                                    </c:set>
+                                    <label for="phone" class="form-label">Phone number:</label>
+                                    <form:input type="text"
+                                                class="form-control ${not empty invalidPhone ? 'is-invalid' : ''}"
+                                                path="phone"/>
+                                        ${invalidPhone}
                                 </div>
                                 <div>
                                     <label for="address" class="form-label">Address:</label>

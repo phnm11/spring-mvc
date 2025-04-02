@@ -36,26 +36,26 @@
                                         <thead>
                                         <tr>
                                             <th scope="col">ID</th>
-                                            <th scope="col">Email</th>
+                                            <th scope="col">Name</th>
                                             <th scope="col">Price</th>
                                             <th scope="col">Factory</th>
                                             <th scope="col">Action</th>
                                         </tr>
                                         </thead>
                                         <tbody>
-<%--                                        <c:forEach var="user" items="${users}">--%>
-<%--                                            <tr>--%>
-<%--                                                <th scope="row">${user.id}</th>--%>
-<%--                                                <td>${user.email}</td>--%>
-<%--                                                <td>${user.fullName}</td>--%>
-<%--                                                <td>${user.role.name}</td>--%>
-<%--                                                <td>--%>
-<%--                                                    <a href="/admin/user/${user.id}" class="btn btn-success">View</a>--%>
-<%--                                                    <a href="/admin/user/update/${user.id}" class="btn btn-warning mx-2">Update</a>--%>
-<%--                                                    <a href="/admin/user/delete/${user.id}" class="btn btn-danger">Delete</a>--%>
-<%--                                                </td>--%>
-<%--                                            </tr>--%>
-<%--                                        </c:forEach>--%>
+                                        <c:forEach var="product" items="${products}">
+                                            <tr>
+                                                <th scope="row">${product.id}</th>
+                                                <td>${product.name}</td>
+                                                <td>${product.price}</td>
+                                                <td>${product.factory}</td>
+                                                <td>
+                                                    <a href="/admin/product/${product.id}" class="btn btn-success">View</a>
+                                                    <a href="/admin/product/update/${product.id}" class="btn btn-warning mx-2">Update</a>
+                                                    <a href="/admin/product/delete/${product.id}" class="btn btn-danger">Delete</a>
+                                                </td>
+                                            </tr>
+                                        </c:forEach>
                                         </tbody>
                                     </table>
                                 </div>

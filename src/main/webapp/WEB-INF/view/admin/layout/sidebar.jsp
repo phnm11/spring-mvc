@@ -25,7 +25,7 @@
         </div>
         <div class="sb-sidenav-footer">
             <div class="small">Logged in as:</div>
-            <c:out value="${pageContext.request.userPrincipal.name}"/>
+            <c:out value="${sessionScope.fullName}"/>
         </div>
     </nav>
 </div>

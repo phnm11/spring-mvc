@@ -6,7 +6,6 @@ import com.phnm.laptopshop.domain.dto.RegisterDTO;
 import com.phnm.laptopshop.service.ProductService;
 import com.phnm.laptopshop.service.UserService;
 import jakarta.validation.Valid;
-import org.springframework.security.core.parameters.P;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -75,5 +74,10 @@ public class HomePageController {
     @GetMapping("/access-deny")
     public String getDenyPage() {
         return "client/auth/deny";
+    }
+
+    @GetMapping("/cart")
+    public String getCartPage(Model model) {
+        return "client/cart/detail";
     }
 }

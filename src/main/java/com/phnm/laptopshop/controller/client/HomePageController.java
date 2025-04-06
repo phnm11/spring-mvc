@@ -6,6 +6,7 @@ import com.phnm.laptopshop.domain.Product;
 import com.phnm.laptopshop.domain.User;
 import com.phnm.laptopshop.domain.dto.RegisterDTO;
 import com.phnm.laptopshop.repository.CartRepository;
+import com.phnm.laptopshop.service.OrderService;
 import com.phnm.laptopshop.service.ProductService;
 import com.phnm.laptopshop.service.UserService;
 import jakarta.servlet.http.HttpServletRequest;
@@ -27,14 +28,17 @@ import java.util.List;
 @Controller
 public class HomePageController {
     private final ProductService productService;
+    private final OrderService orderService;
     private final UserService userService;
     private final PasswordEncoder passwordEncoder;
 
     public HomePageController(
             ProductService productService,
+            OrderService orderService,
             UserService userService,
             PasswordEncoder passwordEncoder) {
         this.productService = productService;
+        this.orderService = orderService;
         this.userService = userService;
         this.passwordEncoder = passwordEncoder;
     }
@@ -145,6 +149,14 @@ public class HomePageController {
             @RequestParam("receiverPhone") String receiverPhone
     ) {
         HttpSession session = request.getSession(false);
-        return "redirect:/";
+        long id = (long) session.getAttribute("id");
+        User currentUser = userService.getUserById(id);
+        orderService.placeOrder(currentUser, session, receiverName, receiverAddress, receiverPhone);
+        return "redirect:/order-success";
+    }
+
+    @GetMapping("/order-success")
+    public String getOrderSuccessPage() {
+        return "client/cart/orderSuccess";
     }
 }

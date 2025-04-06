@@ -79,7 +79,6 @@
                     <th scope="col">Giá thành</th>
                     <th scope="col">Số lượng</th>
                     <th scope="col">Thành tiên</th>
-                    <th scope="col">Xử lý</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -121,15 +120,6 @@
                                 <fmt:formatNumber type="number" value="${cartDetail.price * cartDetail.quantity}"/>
                             </p>
                         </td>
-                        <td>
-                            <form action="/delete-cart-product/${cartDetail.id}" method="post">
-                                <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
-                                <button class="btn btn-md rounded-circle bg-light border mt-4">
-                                    <i class="fa fa-times text-danger"></i>
-                                </button>
-                            </form>
-                        </td>
-
                     </tr>
                 </c:forEach>
                 </tbody>

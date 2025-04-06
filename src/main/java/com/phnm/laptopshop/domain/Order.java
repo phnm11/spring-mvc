@@ -11,6 +11,10 @@ public class Order {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
     private double totalPrice;
+    private String receiverName;
+    private String receiverAddress;
+    private String receiverPhone;
+    private String status;
 
     // userId
     @ManyToOne

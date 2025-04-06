@@ -132,20 +132,84 @@
 
 
     // Product Quantity
+    // $('.quantity button').on('click', function () {
+    //     var button = $(this);
+    //     var oldValue = button.parent().parent().find('input').val();
+    //     if (button.hasClass('btn-plus')) {
+    //         var newVal = parseFloat(oldValue) + 1;
+    //     } else {
+    //         if (oldValue > 0) {
+    //             var newVal = parseFloat(oldValue) - 1;
+    //         } else {
+    //             newVal = 0;
+    //         }
+    //     }
+    //     button.parent().parent().find('input').val(newVal);
+    // });
+
     $('.quantity button').on('click', function () {
+        let change = 0;
+
         var button = $(this);
         var oldValue = button.parent().parent().find('input').val();
         if (button.hasClass('btn-plus')) {
             var newVal = parseFloat(oldValue) + 1;
+            change = 1;
         } else {
-            if (oldValue > 0) {
-                var newVal = parseFloat(oldValue) - 1;
+            if (oldValue > 1) {
+                newVal = parseFloat(oldValue) - 1;
+                change = -1;
             } else {
-                newVal = 0;
+                newVal = 1;
             }
         }
-        button.parent().parent().find('input').val(newVal);
+
+        const input = button.parent().parent().find('input');
+        input.val(newVal);
+
+        //get price
+        const price = input.attr("data-cart-detail-price");
+        const id = input.attr("data-cart-detail-id");
+
+        const priceElement = $(`p[data-cart-detail-id='${id}']`);
+        if (priceElement) {
+            const newPrice = +price * newVal;
+            priceElement.text(formatCurrency(newPrice.toFixed(2)) + " đ");
+        }
+
+        // update total cart price
+        const totalPriceElement = $("p[data-cart-total-price]");
+        if (totalPriceElement && totalPriceElement.length > 0) {
+            const currentTotal = totalPriceElement.first().attr("data-cart-total-price");
+            let newTotal = +currentTotal;
+
+            if (change === 0) {
+                newTotal = +currentTotal;
+            } else {
+                newTotal = +change * +price + +currentTotal;
+            }
+
+            //reset change
+            change = 0;
+
+            totalPriceElement?.each(function (index, element) {
+                // update total price text
+                $(totalPriceElement[index]).text(formatCurrency(newTotal.toFixed(2)) + " đ");
+                // update total price attribute
+                $(totalPriceElement[index]).attr("data-cart-total-price", newTotal);
+            })
+        }
     });
 
+    function formatCurrency(value) {
+        const formatter = new Intl.NumberFormat('vi-VN', {
+            style: 'decimal',
+            minimumFractionDigits: 0,
+        })
+
+        let formatted = formatter.format(value);
+        formatted = formatted.replace(/\./g, '.');
+        return formatted;
+    }
 })(jQuery);
 

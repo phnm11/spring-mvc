@@ -28,7 +28,14 @@ public class ItemController {
     public String addProductToCart(@PathVariable("id") long id, HttpServletRequest request) {
         HttpSession session = request.getSession(false);
         String email = (String) session.getAttribute("email");
-        productService.addProductToCart(email, id);
+        productService.addProductToCart(email, id, session);
         return "redirect:/";
+    }
+
+    @PostMapping("/delete-cart-product/{id}")
+    public String deleteProductFromCart(@PathVariable("id") long id, HttpServletRequest request) {
+        HttpSession session = request.getSession(false);
+        productService.deleteCartDetail(id, session);
+        return "redirect:/cart";
     }
 }

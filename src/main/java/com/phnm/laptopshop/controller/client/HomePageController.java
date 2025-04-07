@@ -1,9 +1,6 @@
 package com.phnm.laptopshop.controller.client;
 
-import com.phnm.laptopshop.domain.Cart;
-import com.phnm.laptopshop.domain.CartDetail;
-import com.phnm.laptopshop.domain.Product;
-import com.phnm.laptopshop.domain.User;
+import com.phnm.laptopshop.domain.*;
 import com.phnm.laptopshop.domain.dto.RegisterDTO;
 import com.phnm.laptopshop.repository.CartRepository;
 import com.phnm.laptopshop.service.OrderService;
@@ -158,5 +155,16 @@ public class HomePageController {
     @GetMapping("/order-success")
     public String getOrderSuccessPage() {
         return "client/cart/orderSuccess";
+    }
+
+    @GetMapping("/order-history")
+    public String getOrderHistoryPage(Model model, HttpServletRequest request) {
+        HttpSession session = request.getSession(false);
+        long id = (long) session.getAttribute("id");
+        User currentUser = userService.getUserById(id);
+        List<Order> orders = orderService.getOrdersByUser(currentUser);
+
+        model.addAttribute("orders", orders);
+        return "client/cart/orderHistory";
     }
 }

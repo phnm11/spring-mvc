@@ -21,17 +21,17 @@
     <div id="layoutSidenav_content">
         <main>
             <div class="container-fluid px-4">
-                <h1 class="mt-4">Manage Products</h1>
+                <h1 class="mt-4">Quản lý sản phẩm</h1>
                 <ol class="breadcrumb mb-4">
                     <li class="breadcrumb-item"><a href="/admin">Dashboard</a></li>
-                    <li class="breadcrumb-item"><a href="/admin/product">Products</a></li>
-                    <li class="breadcrumb-item active">Detail</li>
+                    <li class="breadcrumb-item"><a href="/admin/product">Sản phẩm</a></li>
+                    <li class="breadcrumb-item active">Chi tiết</li>
                 </ol>
                 <div class="my-5">
                     <div class="row">
                         <div class="col-12 mx-auto">
                             <div class="d-flex justify-content-between">
-                                <h3>Product information with id: ${id}</h3>
+                                <h3>Thông tin sản phẩm ID: ${id}</h3>
                             </div>
                             <hr/>
                             <div class="d-flex justify-content-center gap-lg-5">
@@ -40,25 +40,25 @@
                                             <c:if test="${not empty product.image}">
                                                 src="/images/product_thumbnail/${product.image}"
                                             </c:if>
-                                         alt="Avatar preview"/>
-                                    <p>Product Image</p>
+                                         alt="Product preview"/>
+                                    <p>Ảnh sản phẩm</p>
                                 </div>
                                 <div class="card" style="width: 60%">
-                                    <div class="card-header">User information</div>
+                                    <div class="card-header">Thông tin sản phẩm</div>
                                     <ul class="list-group list-group-flush">
                                         <li class="list-group-item">ID: ${product.id}</li>
-                                        <li class="list-group-item">Name: ${product.name}</li>
-                                        <li class="list-group-item">Price: ${product.price}</li>
-                                        <li class="list-group-item">Detail description: ${product.detailDesc}</li>
-                                        <li class="list-group-item">Short description: ${product.shortDesc}</li>
-                                        <li class="list-group-item">Quantity: ${product.quantity}</li>
-                                        <li class="list-group-item">Sold: ${product.sold}</li>
-                                        <li class="list-group-item">Factory: ${product.factory}</li>
-                                        <li class="list-group-item">Target: ${product.target}</li>
+                                        <li class="list-group-item">Tên: ${product.name}</li>
+                                        <li class="list-group-item">Giá: ${product.price}</li>
+                                        <li class="list-group-item">Mô tả chi tiết: ${product.detailDesc}</li>
+                                        <li class="list-group-item">Mô tả ngắn: ${product.shortDesc}</li>
+                                        <li class="list-group-item">Số lượng: ${product.quantity}</li>
+                                        <li class="list-group-item">Đã bán: ${product.sold}</li>
+                                        <li class="list-group-item">Hãng máy: ${product.factory}</li>
+                                        <li class="list-group-item">Mục đích: ${product.target}</li>
                                     </ul>
                                 </div>
                             </div>
-                            <a href="/admin/product" class="btn btn-success mt-3">Back</a>
+                            <a href="/admin/product" class="btn btn-success mt-3">Quay lại</a>
                         </div>
                     </div>
                 </div>

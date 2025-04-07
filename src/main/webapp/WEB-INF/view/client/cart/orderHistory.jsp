@@ -7,7 +7,7 @@
 <head>
     <meta charset="UTF-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    <title>Thanh toán - LapStore</title>
+    <title>Lịch sử mua hàng - LapStore</title>
     <!-- Google Web Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -67,7 +67,7 @@
         <div class="pt-3">
             <ol class="breadcrumb mb-4">
                 <li class="breadcrumb-item"><a href="/">Trang chủ</a></li>
-                <li class="breadcrumb-item active">Thông tin thanh toán</li>
+                <li class="breadcrumb-item active">Lịch sử mua hàng</li>
             </ol>
         </div>
         <div class="table-responsive">
@@ -78,49 +78,57 @@
                     <th scope="col">Tên</th>
                     <th scope="col">Giá thành</th>
                     <th scope="col">Số lượng</th>
-                    <th scope="col">Thành tiên</th>
+                    <th scope="col">Thành tiền</th>
+                    <th scope="col">Trạng thái</th>
                 </tr>
                 </thead>
                 <tbody>
-                <c:if test="${empty cartDetails}">
+                <c:if test="${empty orders}">
                     <tr>
-                        <td colspan="6" class="text-center">Không có sản phẩm nào trong giỏ hàng</td>
+                        <td colspan="6" class="text-center">Không có đơn hàng nào!</td>
                     </tr>
                 </c:if>
-                <c:forEach var="cartDetail" items="${cartDetails}" varStatus="status">
+                <c:forEach var="order" items="${orders}" varStatus="status">
                     <tr>
-                        <th scope="row">
-                            <div class="d-flex align-items-center">
-                                <img src="/images/product_thumbnail/${cartDetail.product.image}"
-                                     class="img-fluid me-5 rounded-circle"
-                                     style="width: 80px; height: 80px; object-fit: contain" alt="">
-                            </div>
-                        </th>
-                        <td>
-                            <p class="mb-0 mt-4">
-                                <a href="/product/${cartDetail.product.id}"
-                                   target="_blank">${cartDetail.product.name}</a>
-                            </p>
-                        </td>
-                        <td>
-                            <p class="mb-0 mt-4"><fmt:formatNumber type="number" value="${cartDetail.product.price}"/>
-                                đ</p>
-                        </td>
-                        <td>
-                            <div class="input-group quantity mt-4" style="width: 100px;">
-                                <input type="text" class="form-control form-control-sm text-center border-0"
-                                       value="${cartDetail.quantity}"
-                                       data-cart-detail-id="${cartDetail.id}"
-                                       data-cart-detail-price="${cartDetail.price}"
-                                       data-cart-detail-index="${status.index}">
-                            </div>
-                        </td>
-                        <td>
-                            <p class="mb-0 mt-4" data-cart-detail-id="${cartDetail.id}">
-                                <fmt:formatNumber type="number" value="${cartDetail.price * cartDetail.quantity}"/>
-                            </p>
-                        </td>
+                        <td colspan="2">Order ID: ${order.id}</td>
+                        <td colspan="2"></td>
+                        <td colspan="1"><fmt:formatNumber type="number" value="${order.totalPrice}"/> đ</td>
+                        <td colspan="1">${order.status}</td>
                     </tr>
+                    <c:forEach var="orderDetail" items="${order.orderDetails}">
+                        <tr>
+                            <th scope="row">
+                                <div class="d-flex align-items-center">
+                                    <img src="/images/product_thumbnail/${orderDetail.product.image}"
+                                         class="img-fluid me-5 rounded-circle"
+                                         style="width: 80px; height: 80px; object-fit: contain" alt="">
+                                </div>
+                            </th>
+                            <td>
+                                <p class="mb-0 mt-4">
+                                    <a href="/product/${orderDetail.product.id}"
+                                       target="_blank">${orderDetail.product.name}</a>
+                                </p>
+                            </td>
+                            <td>
+                                <p class="mb-0 mt-4">
+                                    <fmt:formatNumber type="number" value="${orderDetail.product.price}"/> đ
+                                </p>
+                            </td>
+                            <td>
+                                <div class="input-group quantity mt-4" style="width: 100px;">
+                                    <input type="text" class="form-control form-control-sm text-center border-0"
+                                           value="${orderDetail.quantity}" disabled>
+                                </div>
+                            </td>
+                            <td>
+                                <p class="mb-0 mt-4">
+                                    <fmt:formatNumber type="number" value="${orderDetail.price * orderDetail.quantity}"/> đ
+                                </p>
+                            </td>
+                            <td></td>
+                        </tr>
+                    </c:forEach>
                 </c:forEach>
                 </tbody>
             </table>

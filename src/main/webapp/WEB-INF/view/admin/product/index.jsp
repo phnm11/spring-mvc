@@ -19,26 +19,26 @@
             <div id="layoutSidenav_content">
                 <main>
                     <div class="container-fluid px-4">
-                        <h1 class="mt-4">Manage Products</h1>
+                        <h1 class="mt-4">Quản lý sản phẩm</h1>
                         <ol class="breadcrumb mb-4">
                             <li class="breadcrumb-item"><a href="/admin">Dashboard</a></li>
-                            <li class="breadcrumb-item active">Products</li>
+                            <li class="breadcrumb-item active">Sản phẩm</li>
                         </ol>
                         <div class="my-5">
                             <div class="row">
                                 <div class="col-12 mx-auto">
                                     <div class="d-flex justify-content-between">
-                                        <h3>Table products</h3>
-                                        <a href="/admin/product/create" class="btn btn-primary">Create a product</a>
+                                        <h3>Danh sách sản phẩm</h3>
+                                        <a href="/admin/product/create" class="btn btn-primary">Tạo mới sản phẩm</a>
                                     </div>
                                     <hr />
                                     <table class="table table-bordered table-hover">
                                         <thead>
                                         <tr>
                                             <th scope="col">ID</th>
-                                            <th scope="col">Name</th>
-                                            <th scope="col">Price</th>
-                                            <th scope="col">Factory</th>
+                                            <th scope="col">Tên</th>
+                                            <th scope="col">Giá</th>
+                                            <th scope="col">Hãng máy</th>
                                             <th scope="col">Action</th>
                                         </tr>
                                         </thead>

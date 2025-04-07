@@ -20,23 +20,23 @@
     <div id="layoutSidenav_content">
         <main>
             <div class="container-fluid px-4">
-                <h1 class="mt-4">Quản lý sản phẩm</h1>
+                <h1 class="mt-4">Quản lý đơn hàng</h1>
                 <ol class="breadcrumb mb-4">
                     <li class="breadcrumb-item"><a href="/admin">Dashboard</a></li>
-                    <li class="breadcrumb-item"><a href="/admin/product">Sản phẩm</a></li>
+                    <li class="breadcrumb-item"><a href="/admin/order">Đơn hàng</a></li>
                     <li class="breadcrumb-item active">Xóa</li>
                 </ol>
                 <div class="my-5">
                     <div class="row">
                         <div class="col-12 mx-auto">
                             <div class="d-flex justify-content-between">
-                                <h3>Xóa sản phẩm ID: ${id}</h3>
+                                <h3>Xóa đơn hàng ID: ${id}</h3>
                             </div>
                             <hr />
-                            <div class="alert alert-danger" role="alert">Bạn có chắc chắn muốn xóa sản phẩm?</div>
+                            <div class="alert alert-danger" role="alert">Bạn có chắc chắn xóa đơn hàng này?</div>
                             <div class="d-flex justify-content-between">
-                                <a href="/admin/product" class="btn btn-success">Quay lại</a>
-                                <form:form action="/admin/product/delete" method="post" modelAttribute="product">
+                                <a href="/admin/order" class="btn btn-success">Quay lại</a>
+                                <form:form action="/admin/order/delete" method="post" modelAttribute="order">
                                     <div class="mb-3" style="display: none">
                                         <label for="id" class="form-label">ID:</label>
                                         <form:input type="text" class="form-control" value="${id}" path="id" />

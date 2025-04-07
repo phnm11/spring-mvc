@@ -21,17 +21,17 @@
     <div id="layoutSidenav_content">
         <main>
             <div class="container-fluid px-4">
-                <h1 class="mt-4">Manage Users</h1>
+                <h1 class="mt-4">Quản lý user</h1>
                 <ol class="breadcrumb mb-4">
                     <li class="breadcrumb-item"><a href="/admin">Dashboard</a></li>
-                    <li class="breadcrumb-item"><a href="/admin/user">Users</a></li>
-                    <li class="breadcrumb-item active">Detail</li>
+                    <li class="breadcrumb-item"><a href="/admin/user">User</a></li>
+                    <li class="breadcrumb-item active">Chi tiết</li>
                 </ol>
                 <div class="my-5">
                     <div class="row">
                         <div class="col-12 mx-auto">
                             <div class="d-flex justify-content-between">
-                                <h3>User information with id: ${id}</h3>
+                                <h3>Thông tin user ID: ${id}</h3>
                             </div>
                             <hr/>
                             <div class="d-flex justify-content-center gap-lg-5">
@@ -44,18 +44,18 @@
                                     <p>User avatar</p>
                                 </div>
                                 <div class="card" style="width: 60%">
-                                    <div class="card-header">User information</div>
+                                    <div class="card-header">Thông tin user</div>
                                     <ul class="list-group list-group-flush">
                                         <li class="list-group-item">ID: ${user.id}</li>
                                         <li class="list-group-item">Email: ${user.email}</li>
-                                        <li class="list-group-item">Full name: ${user.fullName}</li>
-                                        <li class="list-group-item">Address: ${user.address}</li>
-                                        <li class="list-group-item">Phone number: ${user.phone}</li>
-                                        <li class="list-group-item">Role: ${user.role.name}</li>
+                                        <li class="list-group-item">Họ tên: ${user.fullName}</li>
+                                        <li class="list-group-item">Địa chỉ: ${user.address}</li>
+                                        <li class="list-group-item">Số điện thoại: ${user.phone}</li>
+                                        <li class="list-group-item">Vai trò: ${user.role.name}</li>
                                     </ul>
                                 </div>
                             </div>
-                            <a href="/admin/user" class="btn btn-success mt-3">Back</a>
+                            <a href="/admin/user" class="btn btn-success mt-3">Quay lại</a>
                         </div>
                     </div>
                 </div>

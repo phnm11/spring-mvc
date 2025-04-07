@@ -31,16 +31,16 @@
     <div id="layoutSidenav_content">
         <main>
             <div class="container-fluid px-4">
-                <h1 class="mt-4">Manage Products</h1>
+                <h1 class="mt-4">Quản lý sản phẩm</h1>
                 <ol class="breadcrumb mb-4">
                     <li class="breadcrumb-item"><a href="/admin">Dashboard</a></li>
-                    <li class="breadcrumb-item"><a href="/admin/product">Products</a></li>
-                    <li class="breadcrumb-item active">Create</li>
+                    <li class="breadcrumb-item"><a href="/admin/product">Sản phẩm</a></li>
+                    <li class="breadcrumb-item active">Thêm mới</li>
                 </ol>
                 <div class="my-5">
                     <div class="row">
                         <div class="col-md-6 col-12 mx-auto">
-                            <h3>Create a product</h3>
+                            <h3>Thêm mới sản phẩm</h3>
                             <hr/>
                             <form:form method="post" action="/admin/product/create" modelAttribute="newProduct"
                                        class="row g-3" enctype="multipart/form-data">
@@ -48,7 +48,7 @@
                                     <c:set var="invalidName">
                                         <form:errors path="name" cssClass="invalid-feedback"/>
                                     </c:set>
-                                    <label for="name" class="form-label">Name:</label>
+                                    <label for="name" class="form-label">Tên:</label>
                                     <form:input type="text"
                                                 class="form-control ${not empty invalidName ? 'is-invalid' : ''}"
                                                 path="name"/>
@@ -58,7 +58,7 @@
                                     <c:set var="invalidPrice">
                                         <form:errors path="price" cssClass="invalid-feedback"/>
                                     </c:set>
-                                    <label for="price" class="form-label">Price:</label>
+                                    <label for="price" class="form-label">Giá:</label>
                                     <form:input type="number"
                                                 class="form-control ${not empty invalidPrice ? 'is-invalid' : ''}"
                                                 path="price"/>
@@ -68,7 +68,7 @@
                                     <c:set var="invalidDetailDesc">
                                         <form:errors path="detailDesc" cssClass="invalid-feedback"/>
                                     </c:set>
-                                    <label for="detailDesc" class="form-label">Detail description:</label>
+                                    <label for="detailDesc" class="form-label">Mô tả chi tiết:</label>
                                     <form:textarea type="text"
                                                    class="form-control ${not empty invalidDetailDesc ? 'is-invalid' : ''}"
                                                    path="detailDesc"/>
@@ -78,7 +78,7 @@
                                     <c:set var="invalidShortDesc">
                                         <form:errors path="shortDesc" cssClass="invalid-feedback"/>
                                     </c:set>
-                                    <label for="shortDesc" class="form-label">Short description:</label>
+                                    <label for="shortDesc" class="form-label">Mô tả ngắn:</label>
                                     <form:input type="text"
                                                 class="form-control ${not empty invalidShortDesc ? 'is-invalid' : ''}"
                                                 path="shortDesc"/>
@@ -88,14 +88,14 @@
                                     <c:set var="invalidQuantity">
                                         <form:errors path="quantity" cssClass="invalid-feedback"/>
                                     </c:set>
-                                    <label for="quantity" class="form-label">Quantity:</label>
+                                    <label for="quantity" class="form-label">Số lượng:</label>
                                     <form:input type="number"
                                                 class="form-control ${not empty invalidQuantity ? 'is-invalid' : ''}"
                                                 path="quantity"/>
                                         ${invalidQuantity}
                                 </div>
                                 <div class="col-md-6">
-                                    <label class="form-label">Factory:</label>
+                                    <label class="form-label">Hãng máy:</label>
                                     <form:select class="form-select" path="factory">
                                         <form:option value="ACER">Acer</form:option>
                                         <form:option value="APPLE">Apple (Macbook)</form:option>
@@ -107,7 +107,7 @@
                                     </form:select>
                                 </div>
                                 <div class="col-md-6">
-                                    <label class="form-label">Target:</label>
+                                    <label class="form-label">Mục đích:</label>
                                     <form:select class="form-select" path="target">
                                         <form:option value="GAMING">Gaming</form:option>
                                         <form:option value="SINHVIEN-VANPHONG">Sinh viên - Văn phòng</form:option>
@@ -117,7 +117,7 @@
                                     </form:select>
                                 </div>
                                 <div class="col-md-6">
-                                    <label for="thumb" class="form-label">Image:</label>
+                                    <label for="thumb" class="form-label">Ảnh sản phẩm:</label>
                                     <input class="form-control" type="file" id="thumb" name="productImg"
                                            accept=".png, .jpg, .jpeg"/>
                                 </div>
@@ -126,8 +126,8 @@
                                          id="thumbPreview"/>
                                 </div>
                                 <div class="d-flex justify-content-between">
-                                    <a href="/admin/product" class="btn btn-success">Back</a>
-                                    <button type="submit" class="btn btn-primary">Submit</button>
+                                    <a href="/admin/product" class="btn btn-success">Quay lại</a>
+                                    <button type="submit" class="btn btn-primary">Lưu</button>
                                 </div>
                             </form:form>
                         </div>

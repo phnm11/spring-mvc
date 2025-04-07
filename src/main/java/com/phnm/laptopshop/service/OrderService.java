@@ -6,6 +6,7 @@ import jakarta.servlet.http.HttpSession;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class OrderService {
@@ -29,9 +30,38 @@ public class OrderService {
         this.cartDetailRepository = cartDetailRepository;
     }
 
-    public Order getOrderById(long id) {
-        return orderRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Order not found"));
+    public List<Order> getAllOrders() {
+        return orderRepository.findAll();
+    }
+
+    public Optional<Order> getOrderById(long id) {
+        return orderRepository.findById(id);
+    }
+
+    public void deleteOrderById(long id) {
+        Optional<Order> orderOptional = this.getOrderById(id);
+        if (orderOptional.isPresent()) {
+            Order order = orderOptional.get();
+            List<OrderDetail> orderDetails = order.getOrderDetails();
+
+            for (OrderDetail orderDetail : orderDetails) {
+                orderDetailRepository.deleteById(orderDetail.getId());
+            }
+        }
+        orderRepository.deleteById(id);
+    }
+
+    public void updateOrderStatus(Order order) {
+        Optional<Order> orderOptional = this.getOrderById(order.getId());
+        if (orderOptional.isPresent()) {
+            Order currentOrder = orderOptional.get();
+            currentOrder.setStatus(order.getStatus());
+            orderRepository.save(order);
+        }
+    }
+
+    public List<Order> getOrdersByUser(User user) {
+        return orderRepository.findOrderByUser(user);
     }
 
     public void placeOrder(
@@ -40,13 +70,6 @@ public class OrderService {
             String receiverName,
             String receiverAddress,
             String receiverPhone) {
-        Order order = new Order();
-        order.setUser(user);
-        order.setReceiverName(receiverName);
-        order.setReceiverAddress(receiverAddress);
-        order.setReceiverPhone(receiverPhone);
-
-        order = orderRepository.save(order);
 
         // Get cart by user
         Cart cart = cartRepository.findByUser(user);
@@ -54,12 +77,29 @@ public class OrderService {
             List<CartDetail> cartDetails = cart.getCartDetails();
 
             if (cartDetails != null) {
+                // create order
+                Order order = new Order();
+                order.setUser(user);
+                order.setReceiverName(receiverName);
+                order.setReceiverAddress(receiverAddress);
+                order.setReceiverPhone(receiverPhone);
+                order.setStatus("Chờ xử lý");
+
+                double sum = 0;
+                for(CartDetail cartDetail : cartDetails) {
+                    sum += cartDetail.getPrice() * cartDetail.getQuantity();
+                }
+
+                order.setTotalPrice(sum);
+                orderRepository.save(order);
+
                 for (CartDetail cartDetail : cartDetails) {
                     OrderDetail orderDetail = new OrderDetail();
                     orderDetail.setOrder(order);
                     orderDetail.setProduct(cartDetail.getProduct());
                     orderDetail.setPrice(cartDetail.getPrice());
                     orderDetail.setQuantity(cartDetail.getQuantity());
+
 
                     orderDetailRepository.save(orderDetail);
                 }

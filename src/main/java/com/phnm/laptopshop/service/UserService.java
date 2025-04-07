@@ -3,6 +3,8 @@ package com.phnm.laptopshop.service;
 import com.phnm.laptopshop.domain.Role;
 import com.phnm.laptopshop.domain.User;
 import com.phnm.laptopshop.domain.dto.RegisterDTO;
+import com.phnm.laptopshop.repository.OrderRepository;
+import com.phnm.laptopshop.repository.ProductRepository;
 import com.phnm.laptopshop.repository.RoleRepository;
 import com.phnm.laptopshop.repository.UserRepository;
 import org.springframework.stereotype.Service;
@@ -13,11 +15,18 @@ import java.util.List;
 public class UserService {
 
     private final UserRepository userRepository;
+    private final ProductRepository productRepository;
+    private final OrderRepository orderRepository;
     private final RoleRepository roleRepository;
 
-    public UserService(UserRepository userRepository,
-                       RoleRepository roleRepository) {
+    public UserService(
+            UserRepository userRepository,
+            ProductRepository productRepository,
+            OrderRepository orderRepository,
+            RoleRepository roleRepository) {
         this.userRepository = userRepository;
+        this.productRepository = productRepository;
+        this.orderRepository = orderRepository;
         this.roleRepository = roleRepository;
     }
 
@@ -57,5 +66,17 @@ public class UserService {
 
     public User getUserByEmail(String email) {
         return userRepository.findByEmail(email);
+    }
+
+    public long countUsers() {
+        return userRepository.count();
+    }
+
+    public long countProducts() {
+        return productRepository.count();
+    }
+
+    public long countOrders() {
+        return orderRepository.count();
     }
 }

@@ -31,16 +31,16 @@
     <div id="layoutSidenav_content">
         <main>
             <div class="container-fluid px-4">
-                <h1 class="mt-4">Manage Users</h1>
+                <h1 class="mt-4">Quản lý User</h1>
                 <ol class="breadcrumb mb-4">
                     <li class="breadcrumb-item"><a href="/admin">Dashboard</a></li>
-                    <li class="breadcrumb-item"><a href="/admin/user">Users</a></li>
-                    <li class="breadcrumb-item active">Update</li>
+                    <li class="breadcrumb-item"><a href="/admin/user">User</a></li>
+                    <li class="breadcrumb-item active">Cập nhật</li>
                 </ol>
                 <div class="my-5">
                     <div class="row">
                         <div class="col-md-6 col-12 mx-auto">
-                            <h3>Update a user</h3>
+                            <h3>Cập nhật user</h3>
                             <hr/>
                             <form:form method="post" action="/admin/user/update" modelAttribute="newUser"
                                        class="row g-3" enctype="multipart/form-data">
@@ -62,7 +62,7 @@
                                     <c:set var="invalidFullName">
                                         <form:errors path="fullName" cssClass="invalid-feedback"/>
                                     </c:set>
-                                    <label for="fullName" class="form-label">Full name:</label>
+                                    <label for="fullName" class="form-label">Họ tên:</label>
                                     <form:input type="text"
                                                 class="form-control ${not empty invalidFullName ? 'is-invalid' : ''}"
                                                 path="fullName"/>
@@ -72,14 +72,14 @@
                                     <c:set var="invalidPhone">
                                         <form:errors path="phone" cssClass="invalid-feedback"/>
                                     </c:set>
-                                    <label for="phone" class="form-label">Phone number:</label>
+                                    <label for="phone" class="form-label">Số điện thoại:</label>
                                     <form:input type="text"
                                                 class="form-control ${not empty invalidPhone ? 'is-invalid' : ''}"
                                                 path="phone"/>
                                         ${invalidPhone}
                                 </div>
                                 <div>
-                                    <label for="address" class="form-label">Address:</label>
+                                    <label for="address" class="form-label">Địa chỉ:</label>
                                     <form:input type="text" class="form-control" path="address"/>
                                 </div>
                                 <div class="col-md-6">
@@ -99,8 +99,8 @@
                                          id="avatarPreview"/>
                                 </div>
                                 <div class="d-flex justify-content-between">
-                                    <a href="/admin/user" class="btn btn-success">Back</a>
-                                    <button type="submit" class="btn btn-primary">Submit</button>
+                                    <a href="/admin/user" class="btn btn-success">Quay lại</a>
+                                    <button type="submit" class="btn btn-primary">Lưu</button>
                                 </div>
                             </form:form>
                         </div>

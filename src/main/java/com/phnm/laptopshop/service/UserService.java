@@ -7,6 +7,8 @@ import com.phnm.laptopshop.repository.OrderRepository;
 import com.phnm.laptopshop.repository.ProductRepository;
 import com.phnm.laptopshop.repository.RoleRepository;
 import com.phnm.laptopshop.repository.UserRepository;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -30,8 +32,8 @@ public class UserService {
         this.roleRepository = roleRepository;
     }
 
-    public List<User> getAllUsers() {
-        return userRepository.findAll();
+    public Page<User> getAllUsers(Pageable pageable) {
+        return userRepository.findAll(pageable);
     }
 
     public User saveUser(User newUser) {

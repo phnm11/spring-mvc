@@ -3,6 +3,8 @@ package com.phnm.laptopshop.service;
 import com.phnm.laptopshop.domain.*;
 import com.phnm.laptopshop.repository.*;
 import jakarta.servlet.http.HttpSession;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -30,8 +32,8 @@ public class OrderService {
         this.cartDetailRepository = cartDetailRepository;
     }
 
-    public List<Order> getAllOrders() {
-        return orderRepository.findAll();
+    public Page<Order> getAllOrders(Pageable pageable) {
+        return orderRepository.findAll(pageable);
     }
 
     public Optional<Order> getOrderById(long id) {
@@ -86,7 +88,7 @@ public class OrderService {
                 order.setStatus("Chờ xử lý");
 
                 double sum = 0;
-                for(CartDetail cartDetail : cartDetails) {
+                for (CartDetail cartDetail : cartDetails) {
                     sum += cartDetail.getPrice() * cartDetail.getQuantity();
                 }
 

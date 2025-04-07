@@ -6,6 +6,9 @@ import com.phnm.laptopshop.service.ProductService;
 import com.phnm.laptopshop.service.UploadService;
 import jakarta.validation.Valid;
 import org.eclipse.tags.shaded.org.apache.xpath.operations.Mod;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -15,6 +18,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
+import java.util.Optional;
 
 @Controller
 public class ProductController {
@@ -30,9 +34,24 @@ public class ProductController {
     }
 
     @GetMapping("/admin/product")
-    public String getProductPage(Model model) {
-        List<Product> products = productService.getAllProducts();
+    public String getProductPage(
+            Model model,
+            @RequestParam("page") Optional<String> pageOptional) {
+        int page = 1;
+
+        try {
+            if (pageOptional.isPresent()) {
+                page = Integer.parseInt(pageOptional.get());
+            }
+        } catch (Exception e) {}
+        Pageable pageable = PageRequest.of(page - 1, 10);
+
+        Page<Product> productsPage = productService.getAllProducts(pageable);
+        List<Product> products = productsPage.getContent();
         model.addAttribute("products", products);
+
+        model.addAttribute("currentPage", page);
+        model.addAttribute("totalPages", productsPage.getTotalPages());
         return "admin/product/index";
     }
 

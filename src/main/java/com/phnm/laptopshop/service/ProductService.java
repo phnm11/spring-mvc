@@ -9,6 +9,8 @@ import com.phnm.laptopshop.repository.CartRepository;
 import com.phnm.laptopshop.repository.ProductRepository;
 import com.phnm.laptopshop.repository.UserRepository;
 import jakarta.servlet.http.HttpSession;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -35,8 +37,8 @@ public class ProductService {
         this.userService = userService;
     }
 
-    public List<Product> getAllProducts() {
-        return productRepository.findAll();
+    public Page<Product> getAllProducts(Pageable pageable) {
+        return productRepository.findAll(pageable);
     }
 
     public void saveProduct(Product newProduct) {

@@ -27,7 +27,7 @@
             <div class="collapse navbar-collapse bg-white" id="navbarCollapse">
                 <div class="navbar-nav mx-auto">
                     <a href="/" class="nav-item nav-link active">Trang chủ</a>
-                    <a href="shop.html" class="nav-item nav-link">Sản phẩm</a>
+                    <a href="/product" class="nav-item nav-link">Sản phẩm</a>
                 </div>
                 <div class="d-flex m-3 me-0">
                     <button class="btn-search btn border border-secondary btn-md-square rounded-circle bg-white me-4"

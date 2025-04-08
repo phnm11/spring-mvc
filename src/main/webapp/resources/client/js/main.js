@@ -127,6 +127,20 @@
         $('#videoModal').on('hide.bs.modal', function (e) {
             $("#video").attr('src', $videoSrc);
         })
+
+        // add active class to item chosen
+        const navElements = $('#navbarCollapse');
+        const curUrl = window.location.pathname;
+        navElements.find('a.nav-link').each(function() {
+            const link = $(this);
+            const href = link.attr('href');
+
+            if (href === curUrl) {
+                link.addClass('active');
+            } else {
+                link.removeClass('active');
+            }
+        })
     });
 
 
@@ -215,6 +229,78 @@
         let formatted = formatter.format(value);
         formatted = formatted.replace(/\./g, '.');
         return formatted;
+    }
+
+    // handle filter products
+    $('#btnFilter').click(function (event) {
+        event.preventDefault();
+        let factoryArr = [];
+        let targetArr = [];
+        let priceArr = [];
+
+        $('#factoryFilter .form-check-input:checked').each(function () {
+            factoryArr.push($(this).val());
+        });
+
+        $('#targetFilter .form-check-input:checked').each(function () {
+            targetArr.push($(this).val());
+        });
+
+        $('#priceFilter .form-check-input:checked').each(function () {
+            priceArr.push($(this).val());
+        });
+
+        let sortValue = $('input[name="radio-sort"]:checked').val();
+
+        const currentUrl = new URL(window.location.href);
+        const searchParams = currentUrl.searchParams;
+
+        searchParams.set('page', '1');
+        searchParams.set('sort', sortValue);
+
+        searchParams.delete('factory');
+        searchParams.delete('target');
+        searchParams.delete('price');
+
+        if (factoryArr.length > 0) {
+            searchParams.set('factory', factoryArr.join(','));
+        }
+        if (targetArr.length > 0) {
+            searchParams.set('target', targetArr.join(','));
+        }
+        if (priceArr.length > 0) {
+            searchParams.set('price', priceArr.join(','));
+        }
+
+        window.location.href = currentUrl.toString();
+    });
+
+    const params = new URLSearchParams(window.location.search);
+
+    if (params.has('factory')) {
+        const factory = params.get('factory').split(',');
+        factory.forEach(function (value) {
+            $(`input[value="${value}"]`).prop('checked', true);
+        });
+    }
+
+    if (params.has('target')) {
+        const target = params.get('target').split(',');
+        target.forEach(function (value) {
+            $(`input[value="${value}"]`).prop('checked', true);
+        });
+    }
+
+    if (params.has('price')) {
+        const price = params.get('price').split(',');
+        price.forEach(function (value) {
+            $(`input[value="${value}"]`).prop('checked', true);
+        });
+    }
+
+    if(params.has('sort')) {
+        const sort = params.get('sort');
+        $(`input[value="${sort}"]`).prop('checked', true);
     }
 })(jQuery);
 

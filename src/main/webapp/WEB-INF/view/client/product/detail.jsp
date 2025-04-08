@@ -67,7 +67,7 @@
         <div>
             <ol class="breadcrumb mb-4">
                 <li class="breadcrumb-item"><a href="/">Trang chủ</a></li>
-                <li class="breadcrumb-item"><a href="#!">Sản phẩm</a></li>
+                <li class="breadcrumb-item"><a href="/product">Sản phẩm</a></li>
                 <li class="breadcrumb-item active">${product.name}</li>
             </ol>
         </div>
